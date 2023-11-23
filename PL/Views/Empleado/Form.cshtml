@@ -32,7 +32,7 @@
 
         <div class="col-md-3">
             @Html.Label("Area")
-            @Html.DropDownListFor(model => model.Area.IdArea, new SelectList(Model.Area.Areas, "IdArea", "NombreArea"), "Selecciona un area", new { @class = "form-controls" })
+            @Html.DropDownListFor(model => model.Area.IdArea, new SelectList(Model.Area.Areas, "IdArea", "NombreArea"), "Selecciona un area", new { @class = "form-control" })
         </div>
 
 
@@ -43,7 +43,7 @@
        
         <div class="col-md-3">
             @Html.Label("Fecha Nacimiento")
-            @Html.TextBoxFor(model=>model.FechaNacimiento, new{@class="Form-control", @type="date",@placeholder = "MM/DD/AAAA"})
+            @Html.TextBoxFor(model=>model.FechaNacimiento, new{@class="form-control", @type="date", @placeholder = "MM/DD/AAAA"})
         </div>
 
         <div class="col-md-3">

@@ -5,7 +5,7 @@
 }
 
 <h1 class="text-center">Empleados</h1>
-<br />
+<hr />
 
 @if(Model.Empleados != null)
 {
@@ -13,6 +13,7 @@
         <div class="col-md-12">
             <a class="btn btn-success" href="@Url.Action("Form","Empleado", new {IdEmpleado = 0} )">Agregar nuevo empleado</a>
         </div>
+        
         <hr>
         <table class="table table-hover">
             <thead  class="table-primary">
