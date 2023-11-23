@@ -1,0 +1,65 @@
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
+namespace DL;
+
+public partial class JgarciaTestSolContext : DbContext
+{
+    public JgarciaTestSolContext()
+    {
+    }
+
+    public JgarciaTestSolContext(DbContextOptions<JgarciaTestSolContext> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<Area> Areas { get; set; }
+
+    public virtual DbSet<Empleado> Empleados { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=LAPTOP-2POFP3ID; Database= JGarciaTestSol; TrustServerCertificate=True; User ID=sa; Password=pass@word1;");
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Area>(entity =>
+        {
+            entity.HasKey(e => e.IdArea).HasName("PK__Area__2FC141AA4EE3C9B8");
+
+            entity.ToTable("Area");
+
+            entity.Property(e => e.NombreArea)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Empleado>(entity =>
+        {
+            entity.HasKey(e => e.IdEmpleado).HasName("PK__Empleado__CE6D8B9EC1E136B4");
+
+            entity.ToTable("Empleado");
+
+            entity.Property(e => e.ApellidoMaterno)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.ApellidoPaterno)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.FechaNacimiento).HasColumnType("date");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.IdAreaNavigation).WithMany(p => p.Empleados)
+                .HasForeignKey(d => d.IdArea)
+                .HasConstraintName("FK__Empleado__Sueldo__1367E606");
+        });
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+}

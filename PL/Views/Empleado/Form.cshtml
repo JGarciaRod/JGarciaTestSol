@@ -1,0 +1,102 @@
+﻿@model BL.Empleado
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Agregar nuevo empleado</h1>
+<hr />
+
+@using (Html.BeginForm("Form", "Empleado", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model=>model.IdEmpleado)
+
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Label("Nombre:")
+            @Html.TextBoxFor(model=>model.Nombre, new{@class="form-control", onkeypress = "return validarLetras(event,'lblNombre')"})
+            <label id="lblNombre" style="color:#ff0000"></label>
+        </div>
+
+        <div class="col-md-3">
+            @Html.Label("Apellido Paterno:")
+            @Html.TextBoxFor(model=>model.ApellidoPeterno, new{@class="form-control", onkeypress = "return validarLetras(event,'lblApellidoPaterno')" })
+            <label id="lblApellidoPaterno" style="color:#ff0000"></label>
+        </div>
+
+        <div class="col-md-3">
+            @Html.Label("Apellido Materno:")
+            @Html.TextBoxFor(model=>model.ApellidoMaterno, new{@class="form-control", onkeypress = "return validarLetras(event,'lblApellidoMaterno')" })
+            <label id="lblApellidoMaterno" style="color:#ff0000"></label>
+        </div>
+
+        <div class="col-md-3">
+            @Html.Label("Area")
+            @Html.DropDownListFor(model => model.Area.IdArea, new SelectList(Model.Area.Areas, "IdArea", "NombreArea"), "Selecciona un area", new { @class = "form-controls" })
+        </div>
+
+
+    </div>
+    <br />
+    <div class="row">
+        
+       
+        <div class="col-md-3">
+            @Html.Label("Fecha Nacimiento")
+            @Html.TextBoxFor(model=>model.FechaNacimiento, new{@class="Form-control", @type="date",@placeholder = "MM/DD/AAAA"})
+        </div>
+
+        <div class="col-md-3">
+            @Html.Label("Sueldo");
+            @Html.TextBoxFor(model=>model.Sueldo, new{@class="form-control",@placeholder = "0.0", onkeypress = "return isNumber(event,'lblSueldo')" })
+            <label id="lblSueldo" style="color:#ff0000"></label>
+        </div>
+    
+        <div class="col-md-3">
+            <input type="submit" data-toggle="modal" class="btn btn-success form-control" value="Guardar" />
+        </div>
+
+        <div class="col-md-3">
+            <a id="back" class="btn btn-danger form-control" href="@Url.Action("GetAll", "Empleado")">Volver</a>
+        </div>
+
+
+    </div>
+    
+}
+
+@section Scripts{
+    <script type="text/javascript">
+
+        function validarLetras(e, lbl) {
+            var key = e.keyCode;
+            if ((key >= 65 && key <= 90) || key == 8 || (key >= 97 && key <= 122)) {
+                $('#' + lbl).text('');
+                return true;
+            }
+            else {
+                $('#' + lbl).text('Solo se aceptan letras');
+                $('#' + lbl).css('color', 'red');
+
+                return false;
+            }
+        }
+
+        function isNumber(evt, lbl) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                $('#' + lbl).text('Solo se aceptan numeros');
+                $('#' + lbl).css('color', 'red');
+                return false;
+            }
+            else {
+                $('#' + lbl).text('');
+                return true;
+            }
+        }
+
+
+    </script>
+}
+

@@ -1,0 +1,56 @@
+﻿@model BL.Empleado
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Empleados</h1>
+<br />
+
+@if(Model.Empleados != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-success" href="@Url.Action("Form","Empleado", new {IdEmpleado = 0} )">Agregar nuevo empleado</a>
+        </div>
+        <hr>
+        <table class="table table-hover">
+            <thead  class="table-primary">
+                <tr>
+                    <th>Editar</th>
+                    <th>Nombre</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody class="table-secondary">
+                @foreach(BL.Empleado empleado in Model.Empleados)
+                {
+                    <tr>
+                        <td>
+                            <a class="btn btn-warning"
+                               href="@Url.Action("Form","Empleado", new { IdEmpleado = empleado.IdEmpleado })">Actualizar</a>
+                        </td>
+                        <td>@empleado.Nombre</td>
+                        <td>@empleado.ApellidoPeterno</td>
+                        <td>@empleado.ApellidoMaterno</td>
+                        <td>@empleado.FechaNacimiento</td>
+                        <td>
+                            <a class="btn btn-danger"
+                               href="@Url.Action("Delete","Empleado", new { IdEmpleado = empleado.IdEmpleado })">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+}
+else
+{
+    <div class="alert alert-dark" role="alert">
+        Aun no tiene Empleados
+    </div>
+}
